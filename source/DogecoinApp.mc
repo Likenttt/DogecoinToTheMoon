@@ -1,6 +1,6 @@
 using Toybox.Application;
 
-class DoegcoinApp extends Application.AppBase {
+class DogecoinApp extends Application.AppBase {
 
     function initialize() {
         AppBase.initialize();
@@ -8,6 +8,7 @@ class DoegcoinApp extends Application.AppBase {
 
     // onStart() is called on application start up
     function onStart(state) {
+
     }
 
     // onStop() is called when your application is exiting
@@ -16,7 +17,7 @@ class DoegcoinApp extends Application.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() {
-        return [ new DoegcoinView() ];
+        return [ new DogecoinView() ];
     }
 
 }

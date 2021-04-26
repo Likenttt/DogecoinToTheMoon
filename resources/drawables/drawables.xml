@@ -1,3 +1,5 @@
 <drawables>
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <bitmap id="DogeIcon" filename="./doge64.png" />
+
 </drawables>

@@ -1,3 +1,8 @@
 <layout id="MainLayout">
-    <bitmap id="id_monkey" x="center" y="center" filename="../drawables/monkey.png" />
+    <bitmap id="dogecoin" x="center" y="dc.getHeight()/12" filename="../drawables/doge64.png" />
+    
+    <!-- <label id="priceLabel" x="center" y="center"
+		color="Graphics.COLOR_WHITE"
+		justification="Graphics.TEXT_JUSTIFY_CENTER"
+		font="Graphics.FONT_NUMBER_THAI_HOT" /> -->
 </layout>
