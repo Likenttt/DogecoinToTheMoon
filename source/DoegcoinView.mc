@@ -8,6 +8,7 @@ class DoegcoinView extends WatchUi.View {
 
     // Load your resources here
     function onLayout(dc) {
+        
         setLayout(Rez.Layouts.MainLayout(dc));
     }
 
