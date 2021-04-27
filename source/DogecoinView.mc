@@ -10,6 +10,7 @@ class DogecoinView extends WatchUi.View {
     hidden var util;
     hidden var result;
     hidden var fetchResult = false;
+    hidden var networkReachable = false;
     hidden var marketDataDict = {
       "aed"=>-1,
       "ars"=>-1,
@@ -97,15 +98,18 @@ class DogecoinView extends WatchUi.View {
         	 			Graphics.FONT_NUMBER_THAI_HOT,
                         "-",
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-        fetchPrice();
-        if(fetchResult){
-            dc.clear();
-            System.print(marketDataDict);
-            dc.drawText(dc.getWidth()/2,dc.getHeight()/2,
-        	 			Graphics.FONT_NUMBER_THAI_HOT,
-                        (marketDataDict[currencyType]).toString(),
-                        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        if(networkReachable){
+            fetchPrice();
+            if(fetchResult){
+                dc.clear();
+                System.print(marketDataDict);
+                dc.drawText(dc.getWidth()/2,dc.getHeight()/2,
+                            Graphics.FONT_NUMBER_THAI_HOT,
+                            (marketDataDict[currencyType]).toString(),
+                            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
         }
+
         View.onUpdate(dc);
         // Call the parent onUpdate function to redraw the layout
     }
@@ -128,6 +132,15 @@ class DogecoinView extends WatchUi.View {
         };
 
         Communications.makeWebRequest(
+            "https://api.coingecko.com/api/v3/ping",
+            {},
+            options,
+            method(:onPingReceive)
+        );
+        if(!networkReachable){
+            return;
+        }
+        Communications.makeWebRequest(
             "https://api.coingecko.com/api/v3/coins/dogecoin?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false",
             {},
             options,
@@ -135,7 +148,17 @@ class DogecoinView extends WatchUi.View {
         );
     }
 
-    hidden function onReceive(responseCode, data) {
+    function onPingReceive(responseCode, data){
+        if (responseCode == 200) {
+            networkReachable = true;
+        }else{
+            networkReachable = false;
+        }
+    }
+
+    
+
+    function onReceive(responseCode, data) {
         System.print(responseCode);
         System.print(data);
         if (responseCode == 200) {
