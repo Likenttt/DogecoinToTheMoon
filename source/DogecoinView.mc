@@ -13,10 +13,19 @@ class DogecoinView extends WatchUi.View {
     hidden var networkReachable = false;
     hidden var urlTemplate = "https://api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=$1$&include_24hr_change=true";
     hidden var marketDataDict;
+    hidden var options = {
+            :method => Communications.HTTP_REQUEST_METHOD_GET,
+            :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON,
+            :headers => {
+                "accept" => "application/json"
+            }
+        };
 
 
     function initialize() {
         View.initialize();
+        fetchPrice();
+
     }
 
     // Load your resources here
@@ -33,21 +42,24 @@ class DogecoinView extends WatchUi.View {
 
     // Update the view
     function onUpdate(dc) {
-        
-         
-        fetchPrice();
-        if(fetchResult){
-            dc.clear();
-            System.print(marketDataDict);
-            if(networkReachable){
-                dc.drawText(dc.getWidth()/2,dc.getHeight()/2,
-                        Graphics.FONT_NUMBER_THAI_HOT,
-                        (marketDataDict[currencyType]).toString(),
-                        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-            }
-        }
-
+        // dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+        dc.clear();
         View.onUpdate(dc);
+        if(fetchResult){
+            dc.drawText(dc.getWidth()/2,dc.getHeight()/2,
+                        Graphics.FONT_NUMBER_THAI_HOT,
+                        (marketDataDict[currencyType]).format("%0.2f"),
+                        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            fetchResult = false;
+
+        }else{
+            dc.drawText(dc.getWidth()/2,dc.getHeight()/2,
+                        Graphics.FONT_NUMBER_THAI_HOT,
+                        "...",
+                        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            fetchResult = false;
+
+        }
         // Call the parent onUpdate function to redraw the layout
     }
 
@@ -60,13 +72,6 @@ class DogecoinView extends WatchUi.View {
     }
 
     function fetchPrice(){
-        var options = {
-            :method => Communications.HTTP_REQUEST_METHOD_GET,
-            :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON,
-            :headers => {
-                "accept" => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-            }
-        };
 
         Communications.makeWebRequest(
             "https://api.coingecko.com/api/v3/ping",
@@ -74,24 +79,24 @@ class DogecoinView extends WatchUi.View {
             options,
             method(:onPingReceive)
         );
-        if(!networkReachable){
-            return;
-        }
-        Communications.makeWebRequest(
-            Lang.format(urlTemplate, [currencyType]);,
-            {},
-            options,
-            method(:onReceive)
-        );
     }
 
     function onPingReceive(responseCode, data){
+        System.print("-------onPingReceive------");
+
         System.print("responseCode:"+responseCode);
         System.print("data:"+data);
 
 
         if (responseCode == 200) {
             networkReachable = true;
+            System.print("networkReachable:"+networkReachable);
+            Communications.makeWebRequest(
+                Lang.format(urlTemplate, [currencyType]),
+                {},
+                options,
+                method(:onReceive)
+            );
         }else{
             networkReachable = false;
             System.print("The network is not reachable!");
@@ -101,12 +106,14 @@ class DogecoinView extends WatchUi.View {
     
 
     function onReceive(responseCode, data) {
+        System.print("-------onReceive------");
         System.print(responseCode);
         System.print(data);
         if (responseCode == 200) {
             fetchResult = true;
             System.print(data);
             marketDataDict = data["dogecoin"];
+            WatchUi.requestUpdate();
         } else {
             fetchResult = false;
         }
