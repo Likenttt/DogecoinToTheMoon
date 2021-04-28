@@ -11,69 +11,8 @@ class DogecoinView extends WatchUi.View {
     hidden var result;
     hidden var fetchResult = false;
     hidden var networkReachable = false;
-    hidden var marketDataDict = {
-      "aed"=>-1,
-      "ars"=>-1,
-      "aud"=>-1,
-      "bch"=>-1,
-      "bdt"=>-1,
-      "bhd"=>-1,
-      "bmd"=>-1,
-      "bnb"=>-1,
-      "brl"=>-1,
-      "btc"=>-1,
-      "cad"=>-1,
-      "chf"=>-1,
-      "clp"=>-1,
-      "cny"=>-1,
-      "czk"=>-1,
-      "dkk"=>-1,
-      "dot"=>-1,
-      "eos"=>-1,
-      "eth"=>-1,
-      "eur"=>-1,
-      "gbp"=>-1,
-      "hkd"=>-1,
-      "huf"=>-1,
-      "idr"=>-1,
-      "ils"=>-1,
-      "inr"=>-1,
-      "jpy"=>-1,
-      "krw"=>-1,
-      "kwd"=>-1,
-      "lkr"=>-1,
-      "ltc"=>-1,
-      "mmk"=>-1,
-      "mxn"=>-1,
-      "myr"=>-1,
-      "ngn"=>-1,
-      "nok"=>-1,
-      "nzd"=>-1,
-      "php"=>-1,
-      "pkr"=>-1,
-      "pln"=>-1,
-      "rub"=>-1,
-      "sar"=>-1,
-      "sek"=>-1,
-      "sgd"=>-1,
-      "thb"=>-1,
-      "try"=>-1,
-      "twd"=>-1,
-      "uah"=>-1,
-      "usd"=>-1,
-      "vef"=>-1,
-      "vnd"=>-1,
-      "xag"=>-1,
-      "xau"=>-1,
-      "xdr"=>-1,
-      "xlm"=>-1,
-      "xrp"=>-1,
-      "yfi"=>-1,
-      "zar"=>-1,
-      "bits"=>-1,
-      "link"=>-1,
-      "sats"=>-1
-    };
+    hidden var urlTemplate = "https://api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=$1$&include_24hr_change=true";
+    hidden var marketDataDict;
 
 
     function initialize() {
@@ -94,19 +33,17 @@ class DogecoinView extends WatchUi.View {
 
     // Update the view
     function onUpdate(dc) {
-        dc.drawText(dc.getWidth()/2,dc.getHeight()/2,
-        	 			Graphics.FONT_NUMBER_THAI_HOT,
-                        "-",
-                        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-        if(networkReachable){
-            fetchPrice();
-            if(fetchResult){
-                dc.clear();
-                System.print(marketDataDict);
+        
+         
+        fetchPrice();
+        if(fetchResult){
+            dc.clear();
+            System.print(marketDataDict);
+            if(networkReachable){
                 dc.drawText(dc.getWidth()/2,dc.getHeight()/2,
-                            Graphics.FONT_NUMBER_THAI_HOT,
-                            (marketDataDict[currencyType]).toString(),
-                            Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                        Graphics.FONT_NUMBER_THAI_HOT,
+                        (marketDataDict[currencyType]).toString(),
+                        Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }
         }
 
@@ -141,7 +78,7 @@ class DogecoinView extends WatchUi.View {
             return;
         }
         Communications.makeWebRequest(
-            "https://api.coingecko.com/api/v3/coins/dogecoin?tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false",
+            Lang.format(urlTemplate, [currencyType]);,
             {},
             options,
             method(:onReceive)
@@ -149,10 +86,15 @@ class DogecoinView extends WatchUi.View {
     }
 
     function onPingReceive(responseCode, data){
+        System.print("responseCode:"+responseCode);
+        System.print("data:"+data);
+
+
         if (responseCode == 200) {
             networkReachable = true;
         }else{
             networkReachable = false;
+            System.print("The network is not reachable!");
         }
     }
 
@@ -164,7 +106,7 @@ class DogecoinView extends WatchUi.View {
         if (responseCode == 200) {
             fetchResult = true;
             System.print(data);
-            marketDataDict = data["market_data"]["current_price"];
+            marketDataDict = data["dogecoin"];
         } else {
             fetchResult = false;
         }
