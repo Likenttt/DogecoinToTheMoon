@@ -1,3 +1,6 @@
 <strings>
     <string id="AppName">Doegcoin</string>
+    <string id="updatedLabel">Updated@</string>
+    <string id="highest24Label">24H Highest:</string>
+    <string id="lowest24Label">24H Lowest:</string>
 </strings>

@@ -25,6 +25,9 @@ class DogecoinView extends WatchUi.View {
     const ChineseUpColorDict = {true => Graphics.COLOR_RED,false => Graphics.COLOR_GREEN}; 
     //In Chinese mainland, red indicates up.
     hidden var redUpGreenDown = true;
+    hidden var highest24hString;
+    hidden var lowest24hString;
+    hidden var updatedString;
     hidden var options = {
             :method => Communications.HTTP_REQUEST_METHOD_GET,
             :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON,
@@ -37,7 +40,9 @@ class DogecoinView extends WatchUi.View {
     function initialize() {
         View.initialize();
         fetchPrice();
-
+        highest24hString = WatchUi.loadResource(Rez.Strings.highest24Label);
+        lowest24hString = WatchUi.loadResource(Rez.Strings.lowest24Label);
+        updatedString = WatchUi.loadResource(Rez.Strings.updatedLabel);
     }
 
     // Load your resources here
@@ -150,14 +155,14 @@ class DogecoinView extends WatchUi.View {
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
             dc.drawText(dc.getWidth()/2,dc.getHeight()/2 - 35,
                         Graphics.FONT_SYSTEM_XTINY,
-                        "24H Highest:"+ (marketDataDict[priceHigh24hKey]).format("%0.2f"),
+                        highest24hString+ (marketDataDict[priceHigh24hKey]).format("%0.2f"),
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             
             //24 low
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
             dc.drawText(dc.getWidth()/2,dc.getHeight()/2 + 40,
                         Graphics.FONT_SYSTEM_XTINY,
-                        "24H Lowest:"+ (marketDataDict[priceLow24hKey]).format("%0.2f"),
+                        lowest24hString+ (marketDataDict[priceLow24hKey]).format("%0.2f"),
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             
             //update time
@@ -177,7 +182,7 @@ class DogecoinView extends WatchUi.View {
             var myTime = System.getClockTime(); // ClockTime object
             dc.drawText(dc.getWidth()/2,dc.getHeight()/2 + 55,
                         Graphics.FONT_SYSTEM_XTINY,
-                        "Updated@"+ myTime.hour.format("%02d") + ":" +myTime.min.format("%02d") + ":" + myTime.sec.format("%02d"),
+                        updatedString+ myTime.hour.format("%02d") + ":" +myTime.min.format("%02d") + ":" + myTime.sec.format("%02d"),
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             
             fetchResult = false;
