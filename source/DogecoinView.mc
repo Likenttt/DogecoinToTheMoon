@@ -7,7 +7,7 @@ using Toybox.Time.Gregorian;
 class DogecoinView extends WatchUi.View {
 
     hidden var priceLabel;
-    hidden var currencyType = "cny";
+    hidden var currencyType = "usd";
     hidden var priceDict;
     hidden var util;
     hidden var result;
@@ -35,13 +35,14 @@ class DogecoinView extends WatchUi.View {
                 "accept" => "application/json"
             }
         };
+    hidden var currencyTypeDict = {0 => "cny",1 => "usd",2 => "jpy", 3 => "eur"};
 
 
     function initialize() {
         View.initialize();
-        var currencyTypeFromSettings = Application.getApp().getProperty("currencyType");
+        var currencyTypeNumber = Application.getApp().getProperty("currencyType");
         if(null != currencyTypeFromSettings){
-            currencyType = currencyTypeFromSettings;
+            currencyType = currencyTypeDict[currencyTypeNumber];
         }
         fetchPrice();
         highest24hString = WatchUi.loadResource(Rez.Strings.highest24Label);
@@ -95,7 +96,6 @@ class DogecoinView extends WatchUi.View {
 
     // Update the view
     function onUpdate(dc) {
-
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
         View.onUpdate(dc);
@@ -212,36 +212,13 @@ class DogecoinView extends WatchUi.View {
     }
 
     function fetchPrice(){
-
         Communications.makeWebRequest(
-            "https://api.coingecko.com/api/v3/ping",
-            {},
-            options,
-            method(:onPingReceive)
-        );
-    }
-
-    function onPingReceive(responseCode, data){
-        System.print("-------onPingReceive------");
-
-        System.print("responseCode:"+responseCode);
-        System.print("data:"+data);
-
-
-        if (responseCode == 200) {
-            networkReachable = true;
-            System.print("networkReachable:"+networkReachable);
-            Communications.makeWebRequest(
                 Lang.format(priceApi, [currencyType]),
                 {},
                 options,
                 method(:onReceive)
-            );
-        }else{
-            networkReachable = false;
-            System.print("The network is not reachable!");
-        }
-    }
+        );
+    }    
 
     
 
