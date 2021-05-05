@@ -7,7 +7,7 @@ using Toybox.Time.Gregorian;
 class DogecoinView extends WatchUi.View {
 
     hidden var priceLabel;
-    hidden var currencyType = "usd";
+    hidden var currencyType = "cny";
     hidden var priceDict;
     hidden var util;
     hidden var result;
@@ -41,9 +41,11 @@ class DogecoinView extends WatchUi.View {
     function initialize() {
         View.initialize();
         var currencyTypeNumber = Application.getApp().getProperty("currencyType");
-        if(null != currencyTypeFromSettings){
+        if(null != currencyTypeNumber){
             currencyType = currencyTypeDict[currencyTypeNumber];
         }
+
+        // redUpGreenDown = true;
         fetchPrice();
         highest24hString = WatchUi.loadResource(Rez.Strings.highest24Label);
         lowest24hString = WatchUi.loadResource(Rez.Strings.lowest24Label);
@@ -101,91 +103,99 @@ class DogecoinView extends WatchUi.View {
         View.onUpdate(dc);
         if(fetchResult){
             //current price
+            var priceStr = (marketDataDict[currentPriceKey]).format("%0.2f");
             dc.drawText(dc.getWidth()/2,dc.getHeight()/2,
                         Graphics.FONT_NUMBER_THAI_HOT,
-                        (marketDataDict[currentPriceKey]).format("%0.2f"),
+                        priceStr,
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
-            
-            dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
-            dc.drawText(dc.getWidth()/2 + 85,dc.getHeight()/2-25,
-                    Graphics.FONT_SYSTEM_XTINY,
-                    "1H",
-                    Graphics.TEXT_JUSTIFY_CENTER); 
-            dc.drawText(dc.getWidth()/2 + 85,dc.getHeight()/2+3,
-                    Graphics.FONT_SYSTEM_XTINY,
-                    "24H",
-                    Graphics.TEXT_JUSTIFY_CENTER);
+            var priceStrWidth = dc.getTextWidthInPixels(priceStr,Graphics.FONT_NUMBER_THAI_HOT);
+            var priceFontHeight = Graphics.getFontHeight(Graphics.FONT_NUMBER_THAI_HOT);
+            var xtinyFontHeight = Graphics.getFontHeight(Graphics.FONT_SYSTEM_XTINY);
+            var xtinyFontDescent = Graphics.getFontDescent(Graphics.FONT_SYSTEM_XTINY);
+            var priceStrDescent = Graphics.getFontDescent(Graphics.FONT_NUMBER_THAI_HOT);
+            System.print("priceStrDescent is:"+priceStrDescent);
+
+
             var changeRate1h = (marketDataDict[priceChangePercentage1hKey]).toFloat();
             var changeRate24h = (marketDataDict[priceChangePercentage24hKey]).toFloat();
             System.print("changeRate1h is:"+changeRate1h);
             System.print("changeRate24h is:"+changeRate24h);
 
-            var color;
-            if(redUpGreenDown){
-                color = ChineseUpColorDict[changeRate1h >= 0];
-                dc.setColor(color,Graphics.COLOR_TRANSPARENT);
-                dc.drawText(dc.getWidth()/2 + 70,dc.getHeight()/2-12,
-                        Graphics.FONT_SYSTEM_XTINY,
-                        (changeRate1h>=0?"+":"")+changeRate1h.format("%0.2f")+"%",
-                        Graphics.TEXT_JUSTIFY_LEFT );
-                color = ChineseUpColorDict[changeRate24h >= 0];
-                dc.setColor(color,Graphics.COLOR_TRANSPARENT);
-                dc.drawText(dc.getWidth()/2 + 70,dc.getHeight()/2+15,
-                        Graphics.FONT_SYSTEM_XTINY,
-                        (changeRate24h >= 0?"+":"")+changeRate24h.format("%0.2f")+"%",
-                        Graphics.TEXT_JUSTIFY_LEFT);
-            }else{ 
-                color = ChineseUpColorDict[changeRate1h <= 0];
-                dc.setColor(color,Graphics.COLOR_TRANSPARENT);
-                dc.drawText(dc.getWidth()/2 + 70,dc.getHeight()/2-10,
-                        Graphics.FONT_SYSTEM_XTINY,
-                        (changeRate1h>=0?"+":"")+changeRate1h+"%",
-                        Graphics.TEXT_JUSTIFY_LEFT);
-                color = ChineseUpColorDict[changeRate24h<=0];
-                dc.setColor(color,Graphics.COLOR_TRANSPARENT);
-                dc.drawText(dc.getWidth()/2 + 70,dc.getHeight()/2+15,
-                        Graphics.FONT_SYSTEM_XTINY,
-                        (changeRate24h>=0?"+":"")+changeRate24h+"%",
-                        Graphics.TEXT_JUSTIFY_LEFT);                
-            }
-            //currency type
+            var oneHStrWidth = dc.getTextWidthInPixels("1H(%)",Graphics.FONT_SYSTEM_XTINY);
+
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
-            dc.drawText(dc.getWidth()/2 - 80,
-                        dc.getHeight()/2 + 20,
+            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + oneHStrWidth/2 + 5,
+                    dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + (xtinyFontHeight/2 - xtinyFontDescent) + 3,
+                    Graphics.FONT_SYSTEM_XTINY,
+                    "1H(%)",
+                    Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+
+            var twenty4HStrWidth = dc.getTextWidthInPixels("24H(%)",Graphics.FONT_SYSTEM_XTINY);
+
+            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + twenty4HStrWidth/2 + 5,
+                    dc.getHeight()/2 + xtinyFontHeight/2 - xtinyFontDescent + 3,
+                    Graphics.FONT_SYSTEM_XTINY,
+                    "24H(%)",
+                    Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+            var changeRate1hColor;
+            var changeRate24hColor;
+            if(redUpGreenDown){
+                changeRate1hColor = ChineseUpColorDict[changeRate1h >= 0];
+                changeRate24hColor = ChineseUpColorDict[changeRate24h >= 0];
+            }else{ 
+                changeRate1hColor = ChineseUpColorDict[changeRate1h <= 0];
+                changeRate24hColor = ChineseUpColorDict[changeRate24h<=0];
+            }
+
+            var changeRate1hStr = (changeRate1h>=0?"+":"")+changeRate1h.format("%0.2f");
+            var changeRate1hStrFontWidth = dc.getTextWidthInPixels(changeRate1hStr,Graphics.FONT_SYSTEM_XTINY);
+ 
+            dc.setColor(changeRate1hColor,Graphics.COLOR_TRANSPARENT);
+            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + changeRate1hStrFontWidth/2,
+                        dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + 3*(xtinyFontHeight/2 - xtinyFontDescent) + 7,
                         Graphics.FONT_SYSTEM_XTINY,
-                        currencyType.toUpper(),
-                        Graphics.TEXT_JUSTIFY_RIGHT | Graphics.TEXT_JUSTIFY_VCENTER);
+                        changeRate1hStr,
+                        Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+
+            var changeRate24hStr = (changeRate24h>=0?"+":"")+changeRate24h.format("%0.2f");
+            var changeRate24hStrFontWidth = dc.getTextWidthInPixels(changeRate24hStr,Graphics.FONT_SYSTEM_XTINY);
+            dc.setColor(changeRate24hColor,Graphics.COLOR_TRANSPARENT);
+            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + changeRate24hStrFontWidth/2,
+                        dc.getHeight()/2 + 3*(xtinyFontHeight/2 - xtinyFontDescent) + 7,
+                        Graphics.FONT_SYSTEM_XTINY,
+                        changeRate24hStr,
+                        Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);                
+            
+            //currency type
+            var currencyTypeStr = currencyType.toUpper();
+            var currencyTypeStrWidth = dc.getTextWidthInPixels(currencyTypeStr,Graphics.FONT_SYSTEM_XTINY);
+            dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
+            dc.drawText(dc.getWidth()/2 - priceStrWidth/2 - currencyTypeStrWidth/2 - 5,
+                        dc.getHeight()/2 + priceFontHeight/2 - priceStrDescent - xtinyFontHeight/2,
+                        Graphics.FONT_SYSTEM_XTINY,
+                        currencyTypeStr,
+                        Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
             
             //24 high 
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
-            dc.drawText(dc.getWidth()/2,dc.getHeight()/2 - 35,
+            dc.drawText(dc.getWidth()/2,dc.getHeight()/2 - priceFontHeight/2 + priceStrDescent - 10,
                         Graphics.FONT_SYSTEM_XTINY,
                         highest24hString+ (marketDataDict[priceHigh24hKey]).format("%0.2f"),
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             
             //24 low
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
-            dc.drawText(dc.getWidth()/2,dc.getHeight()/2 + 40,
+            dc.drawText(dc.getWidth()/2,
+                        dc.getHeight()/2 + priceFontHeight/2 - priceStrDescent + 10,
                         Graphics.FONT_SYSTEM_XTINY,
                         lowest24hString+ (marketDataDict[priceLow24hKey]).format("%0.2f"),
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             
             //update time
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
-            // var lastUpdateTime = marketDataDict[lastUpdatedTimeKey];
-            // //2021-05-03T08:27:20.641Z
-            // var options = {
-            //     :year   => lastUpdateTime.substring(0, 4).toNumber(),
-            //     :month  => lastUpdateTime.substring(5, 7).toNumber(),
-            //     :day    => lastUpdateTime.substring(8, 10).toNumber(),
-            //     :hour   => lastUpdateTime.substring(12, 14).toNumber(),
-            //     :minute => lastUpdateTime.substring(15, 17).toNumber(),
-            //     :second => lastUpdateTime.substring(18, 20).toNumber()
-            // };
-            // var now = Gregorian.moment(options);
-            // var info = Gregorian.utcInfo(now, Time.FORMAT_SHORT);
             var myTime = System.getClockTime(); // ClockTime object
-            dc.drawText(dc.getWidth()/2,dc.getHeight()/2 + 55,
+            dc.drawText(dc.getWidth()/2,
+                        dc.getHeight()/2 + priceFontHeight/2 - priceStrDescent + 10 + xtinyFontHeight,
                         Graphics.FONT_SYSTEM_XTINY,
                         updatedString+ myTime.hour.format("%02d") + ":" +myTime.min.format("%02d") + ":" + myTime.sec.format("%02d"),
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
