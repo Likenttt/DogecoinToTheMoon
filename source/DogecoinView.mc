@@ -13,7 +13,6 @@ class DogecoinView extends WatchUi.View {
     hidden var result;
     hidden var fetchResult = false;
     hidden var networkReachable = false;
-    hidden var urlTemplate = "https://api.coingecko.com/api/v3/simple/price?ids=dogecoin&vs_currencies=$1$&include_24hr_change=true";
     hidden var priceApi = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=$1$&ids=dogecoin&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1h%2C24h";
     hidden var marketDataDict;
     hidden var priceChangePercentage1hKey = "price_change_percentage_1h_in_currency";
@@ -41,9 +40,18 @@ class DogecoinView extends WatchUi.View {
     function initialize() {
         View.initialize();
         var currencyTypeNumber = Application.getApp().getProperty("currencyType");
+        System.print("currency Type is: " + currencyType);
         if(null != currencyTypeNumber){
             currencyType = currencyTypeDict[currencyTypeNumber];
         }
+        System.print("currency Type is: " + currencyType);
+        var upDownColor = Application.getApp().getProperty("redUpGreenDown");
+        if(null != upDownColor && upDownColor == 1){
+            redUpGreenDown = false;
+        }
+
+
+
 
         // redUpGreenDown = true;
         fetchPrice();
@@ -124,7 +132,7 @@ class DogecoinView extends WatchUi.View {
             var oneHStrWidth = dc.getTextWidthInPixels("1H(%)",Graphics.FONT_SYSTEM_XTINY);
 
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
-            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + oneHStrWidth/2 + 5,
+            dc.drawText(dc.getWidth()/2 - priceStrWidth/2 - oneHStrWidth/2 - 5,
                     dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + (xtinyFontHeight/2 - xtinyFontDescent) + 3,
                     Graphics.FONT_SYSTEM_XTINY,
                     "1H(%)",
@@ -132,8 +140,8 @@ class DogecoinView extends WatchUi.View {
 
             var twenty4HStrWidth = dc.getTextWidthInPixels("24H(%)",Graphics.FONT_SYSTEM_XTINY);
 
-            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + twenty4HStrWidth/2 + 5,
-                    dc.getHeight()/2 + xtinyFontHeight/2 - xtinyFontDescent + 3,
+            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + oneHStrWidth/2 + 5,
+                    dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + (xtinyFontHeight/2 - xtinyFontDescent) + 3,
                     Graphics.FONT_SYSTEM_XTINY,
                     "24H(%)",
                     Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
@@ -151,7 +159,7 @@ class DogecoinView extends WatchUi.View {
             var changeRate1hStrFontWidth = dc.getTextWidthInPixels(changeRate1hStr,Graphics.FONT_SYSTEM_XTINY);
  
             dc.setColor(changeRate1hColor,Graphics.COLOR_TRANSPARENT);
-            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + changeRate1hStrFontWidth/2,
+            dc.drawText(dc.getWidth()/2 - priceStrWidth/2 - oneHStrWidth/2 - 5,
                         dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + 3*(xtinyFontHeight/2 - xtinyFontDescent) + 7,
                         Graphics.FONT_SYSTEM_XTINY,
                         changeRate1hStr,
@@ -161,7 +169,7 @@ class DogecoinView extends WatchUi.View {
             var changeRate24hStrFontWidth = dc.getTextWidthInPixels(changeRate24hStr,Graphics.FONT_SYSTEM_XTINY);
             dc.setColor(changeRate24hColor,Graphics.COLOR_TRANSPARENT);
             dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + changeRate24hStrFontWidth/2,
-                        dc.getHeight()/2 + 3*(xtinyFontHeight/2 - xtinyFontDescent) + 7,
+                        dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + 3*(xtinyFontHeight/2 - xtinyFontDescent) + 7,
                         Graphics.FONT_SYSTEM_XTINY,
                         changeRate24hStr,
                         Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);                
@@ -171,7 +179,7 @@ class DogecoinView extends WatchUi.View {
             var currencyTypeStrWidth = dc.getTextWidthInPixels(currencyTypeStr,Graphics.FONT_SYSTEM_XTINY);
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
             dc.drawText(dc.getWidth()/2 - priceStrWidth/2 - currencyTypeStrWidth/2 - 5,
-                        dc.getHeight()/2 + priceFontHeight/2 - priceStrDescent - xtinyFontHeight/2,
+                        dc.getHeight()/2 + priceFontHeight/2 - priceStrDescent - xtinyFontHeight/2 + 5,
                         Graphics.FONT_SYSTEM_XTINY,
                         currencyTypeStr,
                         Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);

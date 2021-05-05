@@ -1,15 +1,23 @@
 <resources>
 	<properties>
     	<property id="currencyType" type="number">0</property>
+        <property id="redUpGreenDown" type="number">0</property>
+
     </properties>
     <settings>
     	<setting propertyKey="@Properties.currencyType" title="@Strings.currencyType">
     		<settingConfig type="list">
-                <listEntry value="0">@Rez.Strings.currencyTypeCNY</listEntry>
-                <listEntry value="1">@Rez.Strings.currencyTypeUSD</listEntry>
-                <listEntry value="2">@Rez.Strings.currencyTypeJPY</listEntry>
-                <listEntry value="3">@Rez.Strings.currencyTypeEUR</listEntry>
+                <listEntry value="0">@Strings.currencyTypeCNY</listEntry>
+                <listEntry value="1">@Strings.currencyTypeUSD</listEntry>
+                <listEntry value="2">@Strings.currencyTypeJPY</listEntry>
+                <listEntry value="3">@Strings.currencyTypeEUR</listEntry>
     	    </settingConfig>
     	</setting>
+        <setting propertyKey="@Properties.redUpGreenDown" title="@Strings.redUpGreenDownTitle">
+            <settingConfig type="list">
+                <listEntry value="0">@Strings.redUpGreenDown</listEntry>
+                <listEntry value="1">@Strings.redDownGreenUp</listEntry>
+    	    </settingConfig>
+        </setting>
     </settings>
 </resources>

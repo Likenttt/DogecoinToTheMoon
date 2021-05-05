@@ -8,4 +8,9 @@
     <string id="currencyTypeJPY">JPY</string>
     <string id="currencyTypeUSD">USD</string>
     <string id="currencyTypeEUR">EUR</string>
+
+    <string id="redUpGreenDownTitle">Color Indicating up and down</string>
+    <string id="redUpGreenDown">Red up and green down</string>
+    <string id="redDownGreenUp">Red down and green up</string>
+
 </strings>

@@ -9,4 +9,8 @@
     <string id="currencyTypeJPY">日元（JPY）</string>
     <string id="currencyTypeUSD">美元（USD）</string>
     <string id="currencyTypeEUR">欧元（EUR）</string>
+
+    <string id="redUpGreenDownTitle">涨跌颜色设置</string>
+    <string id="redUpGreenDown">红涨绿跌</string>
+    <string id="redDownGreenUp">红跌绿涨</string>
 </strings>
