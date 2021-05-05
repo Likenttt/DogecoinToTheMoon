@@ -39,6 +39,10 @@ class DogecoinView extends WatchUi.View {
 
     function initialize() {
         View.initialize();
+        var currencyTypeFromSettings = Application.getApp().getProperty("currencyType");
+        if(null != currencyTypeFromSettings){
+            currencyType = currencyTypeFromSettings;
+        }
         fetchPrice();
         highest24hString = WatchUi.loadResource(Rez.Strings.highest24Label);
         lowest24hString = WatchUi.loadResource(Rez.Strings.lowest24Label);
@@ -91,6 +95,7 @@ class DogecoinView extends WatchUi.View {
 
     // Update the view
     function onUpdate(dc) {
+
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
         View.onUpdate(dc);

@@ -4,5 +4,9 @@
     <string id="highest24Label">24小时最高:</string>
     <string id="lowest24Label">24小时最低:</string>
 
-
+    <string id="currencyType">标价货币类型</string>
+    <string id="currencyTypeCNY">人民币（CNY）</string>
+    <string id="currencyTypeJPY">日元（JPY）</string>
+    <string id="currencyTypeUSD">美元（USD）</string>
+    <string id="currencyTypeEUR">欧元（EUR）</string>
 </strings>

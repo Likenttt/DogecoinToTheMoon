@@ -3,4 +3,13 @@
     <string id="updatedLabel">Updated@</string>
     <string id="highest24Label">24H Highest:</string>
     <string id="lowest24Label">24H Lowest:</string>
+    <string id="currencyType">Price Currency Type</string>
+    <string id="currencyTypeCNY">CNY</string>
+    <string id="currencyTypeJPY">JPY</string>
+    <string id="currencyTypeUSD">USD</string>
+    <string id="currencyTypeEUR">EUR</string>
+    <!-- <string id="currencyTypeEnglishPound">P</string> -->
+
+
+    
 </strings>
