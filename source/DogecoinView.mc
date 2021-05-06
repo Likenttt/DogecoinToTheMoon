@@ -7,7 +7,7 @@ using Toybox.Time.Gregorian;
 class DogecoinView extends WatchUi.View {
 
     hidden var priceLabel;
-    hidden var currencyType = "cny";
+    hidden var currencyType = "usd";
     hidden var priceDict;
     hidden var util;
     hidden var result;
@@ -49,10 +49,6 @@ class DogecoinView extends WatchUi.View {
         if(null != upDownColor && upDownColor == 1){
             redUpGreenDown = false;
         }
-
-
-
-
         // redUpGreenDown = true;
         fetchPrice();
         highest24hString = WatchUi.loadResource(Rez.Strings.highest24Label);
@@ -132,16 +128,16 @@ class DogecoinView extends WatchUi.View {
             var oneHStrWidth = dc.getTextWidthInPixels("1H(%)",Graphics.FONT_SYSTEM_XTINY);
 
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
-            dc.drawText(dc.getWidth()/2 - priceStrWidth/2 - oneHStrWidth/2 - 5,
-                    dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + (xtinyFontHeight/2 - xtinyFontDescent) + 3,
+            dc.drawText(dc.getWidth()/2 - priceStrWidth/2 - oneHStrWidth/2,
+                    dc.getHeight()/2 - xtinyFontHeight + xtinyFontDescent,
                     Graphics.FONT_SYSTEM_XTINY,
                     "1H(%)",
                     Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 
             var twenty4HStrWidth = dc.getTextWidthInPixels("24H(%)",Graphics.FONT_SYSTEM_XTINY);
 
-            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + oneHStrWidth/2 + 5,
-                    dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + (xtinyFontHeight/2 - xtinyFontDescent) + 3,
+            dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + twenty4HStrWidth/2,
+                    dc.getHeight()/2 - xtinyFontHeight + xtinyFontDescent,
                     Graphics.FONT_SYSTEM_XTINY,
                     "24H(%)",
                     Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
@@ -160,7 +156,7 @@ class DogecoinView extends WatchUi.View {
  
             dc.setColor(changeRate1hColor,Graphics.COLOR_TRANSPARENT);
             dc.drawText(dc.getWidth()/2 - priceStrWidth/2 - oneHStrWidth/2 - 5,
-                        dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + 3*(xtinyFontHeight/2 - xtinyFontDescent) + 7,
+                        dc.getHeight()/2 ,
                         Graphics.FONT_SYSTEM_XTINY,
                         changeRate1hStr,
                         Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
@@ -169,7 +165,7 @@ class DogecoinView extends WatchUi.View {
             var changeRate24hStrFontWidth = dc.getTextWidthInPixels(changeRate24hStr,Graphics.FONT_SYSTEM_XTINY);
             dc.setColor(changeRate24hColor,Graphics.COLOR_TRANSPARENT);
             dc.drawText(dc.getWidth()/2 + priceStrWidth/2 + changeRate24hStrFontWidth/2,
-                        dc.getHeight()/2 - (priceFontHeight/2 - priceStrDescent) + 3*(xtinyFontHeight/2 - xtinyFontDescent) + 7,
+                        dc.getHeight()/2,
                         Graphics.FONT_SYSTEM_XTINY,
                         changeRate24hStr,
                         Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);                
@@ -186,7 +182,8 @@ class DogecoinView extends WatchUi.View {
             
             //24 high 
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
-            dc.drawText(dc.getWidth()/2,dc.getHeight()/2 - priceFontHeight/2 + priceStrDescent - 10,
+            dc.drawText(dc.getWidth()/2,
+                        dc.getHeight()/2 - priceFontHeight/2 + priceStrDescent - xtinyFontHeight/2,
                         Graphics.FONT_SYSTEM_XTINY,
                         highest24hString+ (marketDataDict[priceHigh24hKey]).format("%0.2f"),
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
@@ -194,7 +191,7 @@ class DogecoinView extends WatchUi.View {
             //24 low
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
             dc.drawText(dc.getWidth()/2,
-                        dc.getHeight()/2 + priceFontHeight/2 - priceStrDescent + 10,
+                        dc.getHeight()/2 + priceFontHeight/2 - priceStrDescent + xtinyFontHeight/2,
                         Graphics.FONT_SYSTEM_XTINY,
                         lowest24hString+ (marketDataDict[priceLow24hKey]).format("%0.2f"),
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
