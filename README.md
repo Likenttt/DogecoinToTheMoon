@@ -23,6 +23,8 @@
     <a href="https://github.com/Likenttt/dogecoin-is-flying-to-the-moon-with-dogefather-elon-musk/issues">Report Bug</a>
     ·
     <a href="https://github.com/Likenttt/dogecoin-is-flying-to-the-moon-with-dogefather-elon-musk/issues">Request Feature</a>
+    ·
+    <a href="https://apps.garmin.com/en-US/apps/c6168ee2-aa5b-42d3-964d-7a891fb8fc12">Connect IQ store</a>
   </p>
 </p>
 
