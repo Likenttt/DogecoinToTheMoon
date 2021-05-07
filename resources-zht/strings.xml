@@ -1,0 +1,16 @@
+<strings>
+    <string id="AppName">狗狗幣</string>
+    <string id="updatedLabel">更新與@</string>
+    <string id="highest24Label">24小時 最高:</string>
+    <string id="lowest24Label">24小時 最低:</string>
+    <string id="currencyType">價格錨定貨幣類型</string>
+    <string id="currencyTypeCNY">CNY</string>
+    <string id="currencyTypeJPY">JPY</string>
+    <string id="currencyTypeUSD">USD</string>
+    <string id="currencyTypeEUR">EUR</string>
+
+    <string id="redUpGreenDownTitle">指示漲跌的顏色</string>
+    <string id="redUpGreenDown">紅漲綠跌</string>
+    <string id="redDownGreenUp">紅跌綠漲</string>
+
+</strings>

@@ -1,0 +1,16 @@
+<strings>
+    <string id="AppName">Doegcoin</string>
+    <string id="updatedLabel">Aktualisiert am@</string>
+    <string id="highest24Label">Maximal 24 Stunden:</string>
+    <string id="lowest24Label">24 Stunden maximal niedrig:</string>
+    <string id="currencyType">Preiswährungstyp</string>
+    <string id="currencyTypeCNY">CNY</string>
+    <string id="currencyTypeJPY">JPY</string>
+    <string id="currencyTypeUSD">USD</string>
+    <string id="currencyTypeEUR">EUR</string>
+
+    <string id="redUpGreenDownTitle">Farbe steigen und fallen</string>
+    <string id="redUpGreenDown">Rot hoch und grün runter</string>
+    <string id="redDownGreenUp">Rot fällt und Grün steigt</string>
+
+</strings>

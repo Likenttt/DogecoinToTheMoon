@@ -41,6 +41,8 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="#reference">Reference</a></li>
+
   </ol>
 </details>
 
@@ -86,6 +88,9 @@ Chuanyi - [@KentLee](https://twitter.com/KentLee01607301) - chuanyi@88.com
 
 Project Link: [Dogecoin](https://github.com/Likenttt/dogecoin-is-flying-to-the-moon-with-dogefather-elon-musk)
 
+## Reference
+
+[Price Sign](https://zh.wikipedia.org/zh-cn/%E8%B4%A7%E5%B8%81%E7%AC%A6%E5%8F%B7)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
