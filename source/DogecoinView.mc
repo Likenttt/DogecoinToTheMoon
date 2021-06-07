@@ -99,13 +99,35 @@ class DogecoinView extends WatchUi.View {
     //     "price_change_percentage_1h_in_currency": 0.6878196956697009,
     //     "price_change_percentage_24h_in_currency": 4.563837247877844
     //   }
+    
+    // converts rfc3339 formatted timestamp to Time::Moment (null on error)
+    function parseISODate(date) {
+        // assert(date instanceOf String)
+
+        // 2011-10-17T16:30:55.000Z
+        // 2011-10-17T16:30:55Z
+        if (date.length() < 20) {
+            return null;
+        }
+
+        var moment = Gregorian.moment({
+            :year => date.substring( 0, 4).toNumber(),
+            :month => date.substring( 5, 7).toNumber(),
+            :day => date.substring( 8, 10).toNumber(),
+            :hour => date.substring(11, 13).toNumber(),
+            :minute => date.substring(14, 16).toNumber(),
+            :second => date.substring(17, 19).toNumber()
+        });
+
+        return moment;
+    }
 
     // Update the view
     function onUpdate(dc) {
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
         View.onUpdate(dc);
-        if(fetchResult){
+        if(fetchResult){            
             //current price
             var priceStr = (marketDataDict[currentPriceKey]).format("%0.2f");
             dc.drawText(dc.getWidth()/2,dc.getHeight()/2,
@@ -198,11 +220,20 @@ class DogecoinView extends WatchUi.View {
             
             //update time
             dc.setColor(Graphics.COLOR_WHITE,Graphics.COLOR_TRANSPARENT);
-            var myTime = System.getClockTime(); // ClockTime object
+            var lastUpdatedTime = marketDataDict[lastUpdatedTimeKey];
+            //System.println("lastUpdatedTime is:"+lastUpdatedTime);
+            var moment = parseISODate(lastUpdatedTime);
+            //System.println("moment time is:"+moment.value());
+			var lastUpdate = Gregorian.info(moment, Time.FORMAT_SHORT);
+			var lastUpdateStr = Lang.format("$1$:$2$:$3$", [
+			    lastUpdate.hour.format("%02d"),
+			    lastUpdate.min.format("%02d"),
+			    lastUpdate.sec.format("%02d")
+			]);
             dc.drawText(dc.getWidth()/2,
                         dc.getHeight()/2 + priceFontHeight/2 - priceStrDescent + 10 + xtinyFontHeight,
                         Graphics.FONT_SYSTEM_XTINY,
-                        updatedString+ myTime.hour.format("%02d") + ":" +myTime.min.format("%02d") + ":" + myTime.sec.format("%02d"),
+                        updatedString + lastUpdateStr,
                         Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             
             fetchResult = false;
