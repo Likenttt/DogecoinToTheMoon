@@ -1,6 +1,6 @@
 <strings>
     <string id="AppName">狗狗幣</string>
-    <string id="updatedLabel">更新與@</string>
+    <string id="updatedLabel">更新於@</string>
     <string id="highest24Label">24小時 最高:</string>
     <string id="lowest24Label">24小時 最低:</string>
     <string id="currencyType">價格錨定貨幣類型</string>
