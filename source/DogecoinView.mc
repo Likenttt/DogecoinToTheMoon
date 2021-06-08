@@ -224,11 +224,13 @@ class DogecoinView extends WatchUi.View {
             //System.println("lastUpdatedTime is:"+lastUpdatedTime);
             var moment = parseISODate(lastUpdatedTime);
             //System.println("moment time is:"+moment.value());
+            var now = Time.now().value();
 			var lastUpdate = Gregorian.info(moment, Time.FORMAT_SHORT);
-			var lastUpdateStr = Lang.format("$1$:$2$:$3$", [
+			var lastUpdateStr = Lang.format("$1$:$2$:$3$ (-$4$s)", [
 			    lastUpdate.hour.format("%02d"),
 			    lastUpdate.min.format("%02d"),
-			    lastUpdate.sec.format("%02d")
+			    lastUpdate.sec.format("%02d"),
+                now - moment.value()
 			]);
             dc.drawText(dc.getWidth()/2,
                         dc.getHeight()/2 + priceFontHeight/2 - priceStrDescent + 10 + xtinyFontHeight,
