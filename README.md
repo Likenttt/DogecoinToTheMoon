@@ -12,10 +12,7 @@
     <a href="https://github.com/Likenttt/DogecoinToTheMoon">
     <img src="screenshot/doge.png" alt="Logo" width="80" height="80">
     </a>
-    <br />
-    <a href="https://apps.garmin.com/en-US/apps/c6168ee2-aa5b-42d3-964d-7a891fb8fc12" target="_blank" class="download">
-      <img src="screenshot/available-connect-iq-badge.svg" height="60" alt="Download" />
-    </a>
+    
 
   <h3 align="center">Dogecoin:To the moon</h3>
 
@@ -59,6 +56,10 @@
 [![Demo][product-screenshot]](https://github.com/Likenttt/DogecoinToTheMoon)
 
 This is a widget for Garmin watch.
+
+<a href="https://apps.garmin.com/en-US/apps/c6168ee2-aa5b-42d3-964d-7a891fb8fc12" target="_blank" class="download">
+  <img src="screenshot/available-connect-iq-badge.svg" height="60" alt="Download" />
+</a>
 
 ## Roadmap
 
