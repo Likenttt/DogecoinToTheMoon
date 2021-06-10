@@ -39,6 +39,8 @@
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#diy">Make your own widget for another coin</a></li>
+    <li><a href="#projects">Widgets based on this project</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#reference">Reference</a></li>
@@ -64,6 +66,16 @@ See the [open issues](https://github.com/Likenttt/dogecoin-is-flying-to-the-moon
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+## DIY
+
+You can make a widget for another encrypted currency with this project. Just fork it and midify it, and remember to tell me the link~
+
+## Projects
+
+Here are projects base on this widgets. Thanks for your composition and share.
+
+- [LtcPriceTracer](https://github.com/ben-29/LtcPriceTracer)
 
 <!-- LICENSE -->
 ## License
