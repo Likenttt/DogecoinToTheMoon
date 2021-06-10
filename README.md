@@ -9,10 +9,10 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/Likenttt/dogecoin-is-flying-to-the-moon-with-dogefather-elon-musk">
+  <a href="https://github.com/Likenttt/DogecoinToTheMoon">
     <img src="screenshot/doge.png" alt="Logo" width="80" height="80">
   </a>
-  <a href="https://apps.garmin.com/en-US/apps/c6168ee2-aa5b-42d3-964d-7a891fb8fc12" target="_blank" class="download"><img src="screenshots/available-connect-iq-badge.png" height="60" alt="Download" /></a>
+  <a href="https://apps.garmin.com/en-US/apps/c6168ee2-aa5b-42d3-964d-7a891fb8fc12" target="_blank" class="download"><img src="screenshots/available-connect-iq-badge.svg" height="60" alt="Download" /></a>
 
   <h3 align="center">Dogecoin:To the moon</h3>
 
@@ -21,9 +21,9 @@
     <br />
     <br />
     ·
-    <a href="https://github.com/Likenttt/dogecoin-is-flying-to-the-moon-with-dogefather-elon-musk/issues">Report Bug</a>
+    <a href="https://github.com/Likenttt/DogecoinToTheMoon/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Likenttt/dogecoin-is-flying-to-the-moon-with-dogefather-elon-musk/issues">Request Feature</a>
+    <a href="https://github.com/Likenttt/DogecoinToTheMoon/issues">Request Feature</a>
     ·
     <a href="https://apps.garmin.com/en-US/apps/c6168ee2-aa5b-42d3-964d-7a891fb8fc12">Connect IQ store</a>
   </p>
@@ -53,13 +53,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Demo][product-screenshot]](https://github.com/Likenttt/dogecoin-is-flying-to-the-moon-with-dogefather-elon-musk)
+[![Demo][product-screenshot]](https://github.com/Likenttt/DogecoinToTheMoon)
 
 This is a widget for Garmin watch.
 
 ## Roadmap
 
-See the [open issues](https://github.com/Likenttt/dogecoin-is-flying-to-the-moon-with-dogefather-elon-musk/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/Likenttt/DogecoinToTheMoon/issues) for a list of proposed features (and known issues).
 
 
 <!-- CONTRIBUTING -->
@@ -85,7 +85,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Chuanyi - [@KentLee](https://twitter.com/KentLee01607301) - chuanyi@88.com
 
-Project Link: [Dogecoin](https://github.com/Likenttt/dogecoin-is-flying-to-the-moon-with-dogefather-elon-musk)
+Project Link: [Dogecoin](https://github.com/Likenttt/DogecoinToTheMoon)
 
 ## Reference
 
