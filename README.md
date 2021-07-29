@@ -95,6 +95,14 @@ Project Link: [Dogecoin](https://github.com/Likenttt/DogecoinToTheMoon)
 
 [Price Sign](https://zh.wikipedia.org/zh-cn/%E8%B4%A7%E5%B8%81%E7%AC%A6%E5%8F%B7)
 
+## Thanks
+
+Thanks JetBrains for the free open source license
+
+<a href="https://www.jetbrains.com/?from=gev" target="_blank">
+	<img src="https://i.loli.net/2021/02/08/2aejB8rwNmQR7FG.png" width = "260" align=center />
+</a>
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
