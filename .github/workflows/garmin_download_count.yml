@@ -5,8 +5,8 @@ name: Get garmin apps downloads count and replace readme, then publish
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-#   push:
-#     branches: [ main ]
+  push:
+    branches: [ main ]
   schedule:
     - cron: '1 0 * * *'
 
@@ -21,50 +21,49 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - name: Remove the old README.md
+        run: |
+          rm ./README.md
       
       - name: Request Garmin pages
+        id: requestGarminIntl
         # You may pin to the exact commit or the version.
         # uses: fjogeleit/http-request-action@0929a0c636cc8dc6ba7715f5b3d90b0655ded3d7
         uses: fjogeleit/http-request-action@v1.8.0
         with:
           # Request URL
-          url: 
+          url: 'https://apps.garmin.com/en-US/apps/c6168ee2-aa5b-42d3-964d-7a891fb8fc12'
           # Request Method
-          method: # optional, default is POST
+          method: 'GET'
           # Content Type
-          contentType: # optional
-          # Request Body as JSON String
-          data: # optional, default is {}
-          # Map of absolute file paths as JSON String
-          files: # optional, default is {}
-          # Auth Username
-          username: # optional
-          # Auth Password
-          password: # optional
+          contentType: 'html'
           # Request Timeout in Sec
-          timeout: # optional, default is 5000
-          # Bearer Authentication Token
-          bearerToken: # optional
-          # Custom HTTP Headers
-          customHeaders: # optional
-          # Prevent this Action to fail if the request respond without an response
-          preventFailureOnNoResponse: # optional
-          # Prevent this Action to fail if the request respond with one of the configured StatusCodes
-          ignoreStatusCodes: # optional
-          # Escape newlines in data string content
-          escapeData: # optional
+          timeout: 5000
       - name: Actions Ecosystem Action Regex Match
+        id: regexMatch
         # You may pin to the exact commit or the version.
         # uses: actions-ecosystem/action-regex-match@9e6c4fb3d5e898f505be7a1fb6e7b0a278f6665b
         uses: actions-ecosystem/action-regex-match@v2.0.2
         with:
           # A text as the target for inputs.regex.
-          text: 
+          text: ${{ steps.requestGarminIntl.outputs.response }}
           # A regex for inputs.text. Supports capturing groups.
           regex: '[^><]+(?<=\d+)(?=<\/span>)'
           # Flags for inputs.regex. e.g.) 'g', 'gm'
           flags: 'gm'
+      - name: Set JSON Field
+        # You may pin to the exact commit or the version.
+        # uses: jossef/action-set-json-field@6e6d7e639f24b3955ef682815317b5613ac6ca12
+        uses: jossef/action-set-json-field@v1
+        with:
+          # file name/path to edit. e.g 'package.json'
+          file: ./readme_fields.json
+          # field to edit. can be nested fields. e.g 'version' or 'metadata.scripts.build'
+          field: ciq_download_intl
+          # value to set. string. e.g. 'v1.2.3'
+          value: ${{ steps.regex-match.outputs.group1 }}
       - name: Readme Replacer - Readme-Workflows
+        if: ${{ steps.regex-match.outputs.match != '' }}
         # You may pin to the exact commit or the version.
         # uses: Readme-Workflows/readme-replacer@476f6f7ca5f3a0e7d3a55712d70227845ea3c3b6
         uses: Readme-Workflows/readme-replacer@v1.0.1
@@ -74,16 +73,11 @@ jobs:
           # Path to template file
           TEMPLATE_FILE: ./README_TEMPLATE.md
           # Path to commit file
-          COMMIT_FILE: # optional, default is ./README.md
+          COMMIT_FILE: ./README.md
           # Path to custom replacer file (JSON). You can select if you want to use eval or not!
-          CUSTOM_REPLACER_FILE: # optional, default is ./.github/customReplacer.json
+          CUSTOM_REPLACER_FILE: ./readme_fields.json
           # Format of the date/time (if date replacer used)
-          DATE_FORMAT: # optional, default is dddd, mmmm dS, yyyy, h:MM:ss TT
-          # Desired timezone of the date (can be locale based of GMT offset)
-          TIMEZONE: # optional, default is 0
-          # Message used for committing changes
-          COMMIT_MESSAGE: # optional, default is ⚡ Update README by replacing keywords
+          COMMIT_MESSAGE: 'update download count. It is an automatic commit'
           # Email used for committing changes
-          COMMIT_EMAIL: # optional, default is 41898282+github-actions[bot]@users.noreply.github.com
           # Name used for committing changes
-          COMMIT_NAME: # optional, default is replacer-bot
+          COMMIT_NAME: 'replace bot'
