@@ -21,9 +21,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Remove the old README.md
-        run: |
-          rm ./README.md
       
       - name: Request Garmin pages
         id: requestGarminIntl
@@ -39,7 +36,7 @@ jobs:
           contentType: 'html'
           # Request Timeout in Sec
           timeout: 5000
-      - name: Actions Ecosystem Action Regex Match
+      - name: Use Regex to match the download times
         id: regexMatch
         # You may pin to the exact commit or the version.
         # uses: actions-ecosystem/action-regex-match@9e6c4fb3d5e898f505be7a1fb6e7b0a278f6665b
@@ -51,33 +48,22 @@ jobs:
           regex: '[^><]+(?<=\d+)(?=<\/span>)'
           # Flags for inputs.regex. e.g.) 'g', 'gm'
           flags: 'gm'
-      - name: Set JSON Field
+      - name: Remove the old README.md and Replace the placeholder in the README_TEMPLATE.md
+        if: ${{ steps.regex-match.outputs.group1 != '' }}
+        run: |
+          rm ./README.md 
+          cp ./README_TEMPLATE.md ./README.md
+          sed -i -e 's/ciq_download_intl/${{ steps.regex-match.outputs.group1 }}/g' ./README.md
+      - name: Finally, make a commit
         # You may pin to the exact commit or the version.
-        # uses: jossef/action-set-json-field@6e6d7e639f24b3955ef682815317b5613ac6ca12
-        uses: jossef/action-set-json-field@v1
+        # uses: zwaldowski/git-commit-action@66730766679672410dc04830ae6389f4376c8c94
+        uses: zwaldowski/git-commit-action@v1
         with:
-          # file name/path to edit. e.g 'package.json'
-          file: ./readme_fields.json
-          # field to edit. can be nested fields. e.g 'version' or 'metadata.scripts.build'
-          field: ciq_download_intl
-          # value to set. string. e.g. 'v1.2.3'
-          value: ${{ steps.regex-match.outputs.group1 }}
-      - name: Readme Replacer - Readme-Workflows
-        if: ${{ steps.regex-match.outputs.match != '' }}
-        # You may pin to the exact commit or the version.
-        # uses: Readme-Workflows/readme-replacer@476f6f7ca5f3a0e7d3a55712d70227845ea3c3b6
-        uses: Readme-Workflows/readme-replacer@v1.0.1
-        with:
-          # Your GitHub username
-          GH_USERNAME: ${{ github.repository_owner }}
-          # Path to template file
-          TEMPLATE_FILE: ./README_TEMPLATE.md
-          # Path to commit file
-          COMMIT_FILE: ./README.md
-          # Path to custom replacer file (JSON). You can select if you want to use eval or not!
-          CUSTOM_REPLACER_FILE: ./readme_fields.json
-          # Format of the date/time (if date replacer used)
-          COMMIT_MESSAGE: 'update download count. It is an automatic commit'
-          # Email used for committing changes
-          # Name used for committing changes
-          COMMIT_NAME: 'replace bot'
+          # Directory to create commit in
+          working_directory: .
+          # Commit message
+          commit_message: 'update download count. It is an automatic commit'
+          # Name to use for commit author
+          author_name: 'Github Actions'
+          # Email to use for commit author
+          author_email: 'chuanyi@protonmail.com'
