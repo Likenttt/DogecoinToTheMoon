@@ -1,0 +1,9 @@
+# This config is used by the github actions to fetch downloads count and replace some fields in readme
+# 此配置文件用于actions获取下载量、替换readme
+ciq:
+  intl:
+    readme_img_id: ciq_download_intl
+    link: https://apps.garmin.com/en-US/apps/c6168ee2-aa5b-42d3-964d-7a891fb8fc12
+  china:
+    readme_img_id: ciq_download_china
+    link: https://apps.garmin.cn/zh-CN/apps/c6168ee2-aa5b-42d3-964d-7a891fb8fc12
