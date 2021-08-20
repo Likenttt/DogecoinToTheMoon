@@ -54,16 +54,21 @@ jobs:
           rm ./README.md 
           cp ./README_TEMPLATE.md ./README.md
           sed -i -e 's/ciq_download_intl/${{ steps.regex-match.outputs.group1 }}/g' ./README.md
-      - name: Finally, make a commit
+
+      - name: Make a Commit and Push
         # You may pin to the exact commit or the version.
-        # uses: zwaldowski/git-commit-action@66730766679672410dc04830ae6389f4376c8c94
-        uses: zwaldowski/git-commit-action@v1
+        # uses: github-actions-x/commit@5cf7985b07155682f82d02b6c2188d90cebeb0c8
+        uses: github-actions-x/commit@v2.8
         with:
-          # Directory to create commit in
-          working_directory: .
-          # Commit message
-          commit_message: 'update download count. It is an automatic commit'
-          # Name to use for commit author
-          author_name: 'Github Actions'
-          # Email to use for commit author
-          author_email: 'chuanyi@protonmail.com'
+          # Github Token with commit access
+          github-token: ${{ secrets.G_T }}
+          # Override branch to push to
+          push-branch: main
+          # Specify commit message
+          commit-message: 'update download count. It is an automatic commit'
+          # Specific files to add.
+          files: .
+          # Committer email. Default is ${name}@users.noreply.github.com
+          email: 'chuanyi@protonmail.com'
+          # Committer name. Default is name of the person or app that initiated the workflow.
+          name: 'github actions'
