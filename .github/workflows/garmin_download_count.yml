@@ -1,0 +1,100 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Get garmin apps downloads count and replace readme, then publish
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '1 0 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      - name: Request Garmin pages
+        # You may pin to the exact commit or the version.
+        # uses: fjogeleit/http-request-action@0929a0c636cc8dc6ba7715f5b3d90b0655ded3d7
+        uses: fjogeleit/http-request-action@v1.8.0
+        with:
+          # Request URL
+          url: 
+          # Request Method
+          method: # optional, default is POST
+          # Content Type
+          contentType: # optional
+          # Request Body as JSON String
+          data: # optional, default is {}
+          # Map of absolute file paths as JSON String
+          files: # optional, default is {}
+          # Auth Username
+          username: # optional
+          # Auth Password
+          password: # optional
+          # Request Timeout in Sec
+          timeout: # optional, default is 5000
+          # Bearer Authentication Token
+          bearerToken: # optional
+          # Custom HTTP Headers
+          customHeaders: # optional
+          # Prevent this Action to fail if the request respond without an response
+          preventFailureOnNoResponse: # optional
+          # Prevent this Action to fail if the request respond with one of the configured StatusCodes
+          ignoreStatusCodes: # optional
+          # Escape newlines in data string content
+          escapeData: # optional
+      - name: Regex Replace find counts
+        # You may pin to the exact commit or the version.
+        # uses: ashley-taylor/regex-property-action@93a24f845cd20790924208225cc72da8b4c6d46d
+        uses: ashley-taylor/regex-property-action@1.2
+        with:
+          # input string to apply regex to
+          value: 
+          # regex to apply
+          regex: 
+          # flags of the regex
+          flags: # optional, default is g
+          # replacement string
+          replacement: # default is $1
+      - name: Readme Replacer - Readme-Workflows
+        # You may pin to the exact commit or the version.
+        # uses: Readme-Workflows/readme-replacer@476f6f7ca5f3a0e7d3a55712d70227845ea3c3b6
+        uses: Readme-Workflows/readme-replacer@v1.0.1
+        with:
+          # Your GitHub username
+          GH_USERNAME: ${{ github.repository_owner }}
+          # Path to template file
+          TEMPLATE_FILE: ./TEMPLATE.md
+          # Path to commit file
+          COMMIT_FILE: # optional, default is ./README.md
+          # Path to custom replacer file (JSON). You can select if you want to use eval or not!
+          CUSTOM_REPLACER_FILE: # optional, default is ./.github/customReplacer.json
+          # Format of the date/time (if date replacer used)
+          DATE_FORMAT: # optional, default is dddd, mmmm dS, yyyy, h:MM:ss TT
+          # Desired timezone of the date (can be locale based of GMT offset)
+          TIMEZONE: # optional, default is 0
+          # Message used for committing changes
+          COMMIT_MESSAGE: # optional, default is ⚡ Update README by replacing keywords
+          # Email used for committing changes
+          COMMIT_EMAIL: # optional, default is 41898282+github-actions[bot]@users.noreply.github.com
+          # Name used for committing changes
+          COMMIT_NAME: # optional, default is replacer-bot
