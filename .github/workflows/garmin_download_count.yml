@@ -5,10 +5,8 @@ name: Get garmin apps downloads count and replace readme, then publish
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+#   push:
+#     branches: [ main ]
   schedule:
     - cron: '1 0 * * *'
 
@@ -74,7 +72,7 @@ jobs:
           # Your GitHub username
           GH_USERNAME: ${{ github.repository_owner }}
           # Path to template file
-          TEMPLATE_FILE: ./TEMPLATE.md
+          TEMPLATE_FILE: ./README_TEMPLATE.md
           # Path to commit file
           COMMIT_FILE: # optional, default is ./README.md
           # Path to custom replacer file (JSON). You can select if you want to use eval or not!
