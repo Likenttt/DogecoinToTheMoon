@@ -3,7 +3,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-
+[![Get Garmin Downloads](https://github.com/Likenttt/DogecoinToTheMoon/actions/workflows/garmin_download_count.yml/badge.svg?branch=main)](https://github.com/Likenttt/DogecoinToTheMoon/actions/workflows/garmin_download_count.yml)
 
 
 
