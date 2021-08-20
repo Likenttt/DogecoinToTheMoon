@@ -37,7 +37,7 @@ jobs:
           # Request Timeout in Sec
           timeout: 5000
       - name: Use Regex to match the download times
-        id: regexMatch
+        id: regex-match
         # You may pin to the exact commit or the version.
         # uses: actions-ecosystem/action-regex-match@9e6c4fb3d5e898f505be7a1fb6e7b0a278f6665b
         uses: actions-ecosystem/action-regex-match@v2.0.2
