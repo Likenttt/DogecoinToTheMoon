@@ -12,9 +12,6 @@ on:
   schedule:
     - cron: '1 0 * * *'
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -26,11 +23,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
+      
       - name: Request Garmin pages
         # You may pin to the exact commit or the version.
         # uses: fjogeleit/http-request-action@0929a0c636cc8dc6ba7715f5b3d90b0655ded3d7
@@ -62,19 +55,17 @@ jobs:
           ignoreStatusCodes: # optional
           # Escape newlines in data string content
           escapeData: # optional
-      - name: Regex Replace find counts
+      - name: Actions Ecosystem Action Regex Match
         # You may pin to the exact commit or the version.
-        # uses: ashley-taylor/regex-property-action@93a24f845cd20790924208225cc72da8b4c6d46d
-        uses: ashley-taylor/regex-property-action@1.2
+        # uses: actions-ecosystem/action-regex-match@9e6c4fb3d5e898f505be7a1fb6e7b0a278f6665b
+        uses: actions-ecosystem/action-regex-match@v2.0.2
         with:
-          # input string to apply regex to
-          value: 
-          # regex to apply
-          regex: 
-          # flags of the regex
-          flags: # optional, default is g
-          # replacement string
-          replacement: # default is $1
+          # A text as the target for inputs.regex.
+          text: 
+          # A regex for inputs.text. Supports capturing groups.
+          regex: '[^><]+(?<=\d+)(?=<\/span>)'
+          # Flags for inputs.regex. e.g.) 'g', 'gm'
+          flags: 'gm'
       - name: Readme Replacer - Readme-Workflows
         # You may pin to the exact commit or the version.
         # uses: Readme-Workflows/readme-replacer@476f6f7ca5f3a0e7d3a55712d70227845ea3c3b6
