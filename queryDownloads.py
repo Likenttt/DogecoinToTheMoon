@@ -37,6 +37,7 @@ def main(ciq_id,badge_pattern,readme_file_name):
     ciq_download_china = get_downloads_from_url('https://apps.garmin.cn/zh-CN/apps/' + ciq_id)
     if ciq_download_intl and ciq_download_china:
         downloads = int(ciq_download_intl) + int(ciq_download_china)
+        print('app download is {}'.format(downloads))
         replace_readme_comments(readme_file_name,badge_pattern,downloads)
 
 if __name__ == "__main__":
