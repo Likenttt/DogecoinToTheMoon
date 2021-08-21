@@ -47,4 +47,4 @@ if __name__ == "__main__":
     parser.add_argument("readme_file_name", help="readme_file_name")
 
     options = parser.parse_args()
-    main(options.ciq_id,options.badge_pattern,readme_file_name)
+    main(options.ciq_id,options.badge_pattern,options.readme_file_name)
