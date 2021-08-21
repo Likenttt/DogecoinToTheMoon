@@ -29,6 +29,7 @@ jobs:
       - name: Setup Python3
         uses: actions/setup-python@v2.2.2
         with:
+          python-version: 3.8.3
           # The target architecture (x86, x64) of the Python interpreter.
           architecture: x86     
       - name: Use py script to get the downloads in Garmin Connect IQ Store(.com and .cn)
