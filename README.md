@@ -16,7 +16,7 @@
     </a>
     
 
-  <h3 align="center">Dogecoin:To the moon</h3>
+  <h3 align="center">Dogecoin to the moon</h3>
 
   <p align="center">
     <img src="https://img.shields.io/badge/CIQ_Store_downloads-638-green"/>
