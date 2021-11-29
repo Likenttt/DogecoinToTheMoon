@@ -19,7 +19,7 @@
   <h3 align="center">Dogecoin to the moon</h3>
 
   <p align="center">
-    <img src="https://img.shields.io/badge/CIQ_Store_downloads-795-green"/>
+    <img src="https://img.shields.io/badge/CIQ_Store_downloads-796-green"/>
     <br />
     Dogecoin price on your wrist!
     <br />
